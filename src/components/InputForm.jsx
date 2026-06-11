@@ -1,18 +1,12 @@
-import { useState } from "react";
-
-export default function InputForm() {
-  const [leetcode, setLeetcode] = useState("");
-  const [codeforces, setCodeforces] = useState("");
-  const [codechef, setCodechef] = useState("");
-
-  function handleAnalyze() {
-    console.log({
-      leetcode,
-      codeforces,
-      codechef,
-    });
-  }
-
+export default function InputForm({
+  leetcode,
+  setLeetcode,
+  codeforces,
+  setCodeforces,
+  codechef,
+  setCodechef,
+  onAnalyze,
+}) {
   return (
     <div className="mt-8 space-y-5">
       <div>
@@ -24,7 +18,7 @@ export default function InputForm() {
           value={leetcode}
           onChange={(e) => setLeetcode(e.target.value)}
           placeholder="anjali_17_10"
-     className="w-full border border-slate-200 rounded-xl px-4 py-3 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:shadow-xl transition-all duration-200"
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:shadow-xl transition-all duration-200"
         />
       </div>
 
@@ -37,7 +31,7 @@ export default function InputForm() {
           value={codeforces}
           onChange={(e) => setCodeforces(e.target.value)}
           placeholder="Anjali021"
-        className="w-full border border-slate-200 rounded-xl px-4 py-3 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:shadow-xl transition-all duration-200"
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:shadow-xl transition-all duration-200"
         />
       </div>
 
@@ -50,13 +44,13 @@ export default function InputForm() {
           value={codechef}
           onChange={(e) => setCodechef(e.target.value)}
           placeholder="sane_ring_4"
-      className="w-full border border-slate-200 rounded-xl px-4 py-3 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:shadow-xl transition-all duration-200"
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-400 focus:shadow-xl transition-all duration-200"
         />
       </div>
 
       <button
-        onClick={handleAnalyze}
-       className="w-full bg-slate-900 text-white py-3 rounded-xl font-semibold shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
+        onClick={onAnalyze}
+        className="w-full bg-slate-900 text-white py-3 rounded-xl font-semibold shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
       >
         Analyze Progress
       </button>
