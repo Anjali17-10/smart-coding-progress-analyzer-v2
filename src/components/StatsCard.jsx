@@ -2,6 +2,7 @@ export default function StatsCard({
   leetcode,
   codeforces,
   codechef,
+  cfData,
 }) {
   return (
     <div className="mt-8">
@@ -57,13 +58,20 @@ export default function StatsCard({
             {codeforces}
           </p>
 
-          <p>
-            <span className="font-semibold">Rating:</span> ----
-          </p>
+<p>
+  <span className="font-semibold">Rating:</span>{" "}
+  {cfData?.rating || "----"}
+</p>
 
-          <p>
-            <span className="font-semibold">Rank:</span> ----
-          </p>
+<p>
+  <span className="font-semibold">Rank:</span>{" "}
+  {cfData?.rank || "----"}
+</p>
+
+<p>
+  <span className="font-semibold">Max Rating:</span>{" "}
+  {cfData?.maxRating || "----"}
+</p>
         </div>
 
         <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl transition-all duration-300">
