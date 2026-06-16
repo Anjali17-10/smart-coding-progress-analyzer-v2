@@ -30,3 +30,12 @@ export async function getCodeforcesSolved(handle) {
 
   return solvedProblems.size;
 }
+export async function getCodeforcesRatingHistory(handle) {
+  const response = await fetch(
+    `https://codeforces.com/api/user.rating?handle=${handle}`
+  );
+
+  const data = await response.json();
+
+  return data.result;
+}

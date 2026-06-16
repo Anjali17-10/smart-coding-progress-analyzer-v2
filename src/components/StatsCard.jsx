@@ -3,6 +3,7 @@ export default function StatsCard({
   codeforces,
   codechef,
   cfData,
+  lcData,
 }) {
   return (
     <div className="mt-8">
@@ -39,13 +40,36 @@ export default function StatsCard({
             {leetcode}
           </p>
 
-     <div className="mt-4">
-  <p className="text-sm text-slate-500">Solved</p>
-  <p className="text-3xl font-bold">----</p>
+  <div className="mt-4">
+  <p className="text-sm text-slate-500">
+    Problems Solved
+  </p>
+
+  <p className="text-3xl font-bold">
+    {lcData?.totalSolved || "----"}
+  </p>
 </div>
-          <p>
-            <span className="font-semibold">Rating:</span> ----
-          </p>
+
+<p>
+  <span className="font-semibold">
+    Easy:
+  </span>{" "}
+  {lcData?.easySolved || "----"}
+</p>
+
+<p>
+  <span className="font-semibold">
+    Medium:
+  </span>{" "}
+  {lcData?.mediumSolved || "----"}
+</p>
+
+<p>
+  <span className="font-semibold">
+    Hard:
+  </span>{" "}
+  {lcData?.hardSolved || "----"}
+</p>
         </div>
 
         <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl transition-all duration-300">
