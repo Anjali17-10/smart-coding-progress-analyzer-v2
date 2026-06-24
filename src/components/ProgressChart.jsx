@@ -11,22 +11,23 @@ import {
 export default function ProgressChart({
   cfData,
   cfSolved,
+    lcData,
 }) {
 
-  const data = [
-    {
-      platform: "LeetCode",
-      solved: 850,
-    },
- {
-  platform: "Codeforces",
-  solved: cfSolved,
-},
-    {
-      platform: "CodeChef",
-      solved: 120,
-    },
-  ];
+const data = [
+  {
+    platform: "LeetCode",
+    solved: lcData?.solved?.solvedProblem || 0,
+  },
+  {
+    platform: "Codeforces",
+    solved: cfSolved || 0,
+  },
+  {
+    platform: "CodeChef",
+    solved: 0,
+  },
+];
 
   return (
     <div className="mt-8 bg-white rounded-2xl shadow-xl p-6">

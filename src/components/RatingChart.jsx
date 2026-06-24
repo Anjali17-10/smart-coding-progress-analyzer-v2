@@ -8,13 +8,18 @@ import {
   CartesianGrid,
 } from "recharts";
 
-export default function RatingChart({ cfData }) {
+export default function RatingChart({
+  cfData,
+  lcData,
+}) {
 
   const data = [
-    {
-      platform: "LeetCode",
-      rating: 1820,
-    },
+ {
+  platform: "LeetCode",
+  rating: Math.round(
+    lcData?.contest?.contestRating || 0
+  ),
+},
     {
       platform: "Codeforces",
       rating: cfData?.rating || 0,

@@ -29,49 +29,63 @@ export default function StatsCard({
 
       {/* Platform Cards */}
     <div className="grid gap-6 md:grid-cols-3">
+<div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl transition-all duration-300">
+  <h2 className="font-bold text-lg mb-3">
+    🟡 LeetCode
+  </h2>
 
-        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl transition-all duration-300">
-          <h2 className="font-bold text-lg mb-3">
-            🟡 LeetCode
-          </h2>
-
-          <p>
-            <span className="font-semibold">Username:</span>{" "}
-            {leetcode}
-          </p>
+  <p>
+    <span className="font-semibold">Username:</span>{" "}
+    {leetcode}
+  </p>
 
   <div className="mt-4">
-  <p className="text-sm text-slate-500">
-    Problems Solved
+    <p className="text-sm text-slate-500">
+      Problems Solved
+    </p>
+
+    <p className="text-3xl font-bold">
+      {lcData?.solved?.solvedProblem || "----"}
+    </p>
+  </div>
+
+  <p>
+    <span className="font-semibold">
+      Easy:
+    </span>{" "}
+    {lcData?.solved?.easySolved || "----"}
   </p>
 
-  <p className="text-3xl font-bold">
-    {lcData?.totalSolved || "----"}
+  <p>
+    <span className="font-semibold">
+      Medium:
+    </span>{" "}
+    {lcData?.solved?.mediumSolved || "----"}
+  </p>
+
+  <p>
+    <span className="font-semibold">
+      Hard:
+    </span>{" "}
+    {lcData?.solved?.hardSolved || "----"}
+  </p>
+
+  <p>
+    <span className="font-semibold">
+      Contest Rating:
+    </span>{" "}
+    {Math.round(
+      lcData?.contest?.contestRating || 0
+    )}
+  </p>
+
+  <p>
+    <span className="font-semibold">
+      Global Rank:
+    </span>{" "}
+    {lcData?.contest?.contestGlobalRanking || "----"}
   </p>
 </div>
-
-<p>
-  <span className="font-semibold">
-    Easy:
-  </span>{" "}
-  {lcData?.easySolved || "----"}
-</p>
-
-<p>
-  <span className="font-semibold">
-    Medium:
-  </span>{" "}
-  {lcData?.mediumSolved || "----"}
-</p>
-
-<p>
-  <span className="font-semibold">
-    Hard:
-  </span>{" "}
-  {lcData?.hardSolved || "----"}
-</p>
-        </div>
-
         <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl transition-all duration-300">
           <h2 className="font-bold text-lg mb-3">
             🔵 Codeforces

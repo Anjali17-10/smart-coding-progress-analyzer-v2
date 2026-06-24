@@ -1,9 +1,24 @@
 export async function getLeetCodeData(username) {
-  const response = await fetch(
-    "https://leetcode-stats-api.herokuapp.com/" + username
-  );
+  const [profileRes, solvedRes, contestRes] =
+    await Promise.all([
+      fetch(
+        `https://alfa-leetcode-api.onrender.com/${username}`
+      ),
+      fetch(
+        `https://alfa-leetcode-api.onrender.com/${username}/solved`
+      ),
+      fetch(
+        `https://alfa-leetcode-api.onrender.com/${username}/contest`
+      ),
+    ]);
 
-  const data = await response.json();
+  const profile = await profileRes.json();
+  const solved = await solvedRes.json();
+  const contest = await contestRes.json();
 
-  return data;
+  return {
+    ...profile,
+    solved,
+    contest,
+  };
 }
