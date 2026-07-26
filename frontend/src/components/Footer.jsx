@@ -41,7 +41,7 @@ export default function Footer() {
             <div className="space-y-3">
 
               <a
-                href="https://github.com/Anjali17-10/Smart-Coding-Progress-Analyzer"
+                href="https://github.com/Anjali17-10/smart-coding-progress-analyzer-v2"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2 hover:text-blue-400 transition"
@@ -59,7 +59,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://www.linkedin.com/in/YOUR-LINKEDIN"
+                href="https://www.linkedin.com/in/anjali-diswar1710/"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2 hover:text-blue-400 transition"
@@ -68,7 +68,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="mailto:yourmail@gmail.com"
+                href="mailto:anjalidiswar570@gmail.com"
                 className="flex items-center gap-2 hover:text-blue-400 transition"
               >
                 ✉️ Email
