@@ -11,6 +11,7 @@ import {
 export default function RatingChart({
   cfData,
   lcData,
+  ccData,
 }) {
 
   const data = [
@@ -26,7 +27,7 @@ export default function RatingChart({
     },
     {
       platform: "CodeChef",
-      rating: 1700,
+      rating: ccData?.rating || 0,
     },
   ];
 

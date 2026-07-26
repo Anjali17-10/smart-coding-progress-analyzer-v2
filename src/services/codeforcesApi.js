@@ -1,41 +1,33 @@
+const BASE_URL = "http://localhost:5000/api/codeforces";
+
 export async function getCodeforcesData(handle) {
-  const response = await fetch(
-    `https://codeforces.com/api/user.info?handles=${handle}`
-  );
+  const response = await fetch(`${BASE_URL}/${handle}`);
 
-  const data = await response.json();
+  if (!response.ok) {
+    throw new Error("Failed to fetch Codeforces user");
+  }
 
-  return data.result[0];
+  return await response.json();
 }
 
 export async function getCodeforcesSolved(handle) {
-  const response = await fetch(
-    `https://codeforces.com/api/user.status?handle=${handle}`
-  );
+  const response = await fetch(`${BASE_URL}/${handle}/solved`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch solved count");
+  }
 
   const data = await response.json();
 
-  const solvedProblems = new Set();
-
-  data.result.forEach((submission) => {
-    if (submission.verdict === "OK") {
-      const problemId =
-        submission.problem.contestId +
-        "-" +
-        submission.problem.index;
-
-      solvedProblems.add(problemId);
-    }
-  });
-
-  return solvedProblems.size;
+  return data.solved;
 }
+
 export async function getCodeforcesRatingHistory(handle) {
-  const response = await fetch(
-    `https://codeforces.com/api/user.rating?handle=${handle}`
-  );
+  const response = await fetch(`${BASE_URL}/${handle}/history`);
 
-  const data = await response.json();
+  if (!response.ok) {
+    throw new Error("Failed to fetch rating history");
+  }
 
-  return data.result;
+  return await response.json();
 }

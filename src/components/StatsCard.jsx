@@ -3,9 +3,15 @@ export default function StatsCard({
   codeforces,
   codechef,
   cfData,
+  cfSolved,
   lcData,
+  ccData,
 }) {
+  const totalSolved =
+  (lcData?.solved?.solvedProblem || 0) +
+  (cfSolved || 0);
   return (
+    
     <div className="mt-8">
 
       {/* Summary Card */}
@@ -22,7 +28,9 @@ export default function StatsCard({
 
   <div>
     <p className="text-slate-300">Total Solved</p>
-    <p className="text-3xl font-bold">----</p>
+   <p className="text-3xl font-bold">
+        {totalSolved}
+    </p>
   </div>
 </div>
       </div>
@@ -45,45 +53,33 @@ export default function StatsCard({
     </p>
 
     <p className="text-3xl font-bold">
-      {lcData?.solved?.solvedProblem || "----"}
+      {lcData?.solved?.solvedProblem ?? "----"}
     </p>
   </div>
 
   <p>
-    <span className="font-semibold">
-      Easy:
-    </span>{" "}
-    {lcData?.solved?.easySolved || "----"}
+    <span className="font-semibold">Easy:</span>{" "}
+    {lcData?.solved?.easySolved ?? "----"}
   </p>
 
   <p>
-    <span className="font-semibold">
-      Medium:
-    </span>{" "}
-    {lcData?.solved?.mediumSolved || "----"}
+    <span className="font-semibold">Medium:</span>{" "}
+    {lcData?.solved?.mediumSolved ?? "----"}
   </p>
 
   <p>
-    <span className="font-semibold">
-      Hard:
-    </span>{" "}
-    {lcData?.solved?.hardSolved || "----"}
+    <span className="font-semibold">Hard:</span>{" "}
+    {lcData?.solved?.hardSolved ?? "----"}
   </p>
 
   <p>
-    <span className="font-semibold">
-      Contest Rating:
-    </span>{" "}
-    {Math.round(
-      lcData?.contest?.contestRating || 0
-    )}
+    <span className="font-semibold">Contest Rating:</span>{" "}
+    ----
   </p>
 
   <p>
-    <span className="font-semibold">
-      Global Rank:
-    </span>{" "}
-    {lcData?.contest?.contestGlobalRanking || "----"}
+    <span className="font-semibold">Global Rank:</span>{" "}
+    ----
   </p>
 </div>
         <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl transition-all duration-300">
@@ -122,13 +118,25 @@ export default function StatsCard({
             {codechef}
           </p>
 
-          <p>
-            <span className="font-semibold">Rating:</span> ----
-          </p>
+         <p>
+  <span className="font-semibold">Rating:</span>{" "}
+  {ccData?.rating || "----"}
+</p>
 
-          <p>
-            <span className="font-semibold">Stars:</span> ----
-          </p>
+<p>
+  <span className="font-semibold">Stars:</span>{" "}
+  {ccData?.stars || "----"}⭐
+</p>
+
+<p>
+  <span className="font-semibold">Solved:</span>{" "}
+  {ccData?.solvedProblems || "----"}
+</p>
+
+<p>
+  <span className="font-semibold">Max Rating:</span>{" "}
+  {ccData?.maxRating || "----"}
+</p>
         </div>
 
       </div>

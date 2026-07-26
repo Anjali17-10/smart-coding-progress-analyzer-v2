@@ -1,24 +1,11 @@
 export async function getLeetCodeData(username) {
-  const [profileRes, solvedRes, contestRes] =
-    await Promise.all([
-      fetch(
-        `https://alfa-leetcode-api.onrender.com/${username}`
-      ),
-      fetch(
-        `https://alfa-leetcode-api.onrender.com/${username}/solved`
-      ),
-      fetch(
-        `https://alfa-leetcode-api.onrender.com/${username}/contest`
-      ),
-    ]);
+  const response = await fetch(
+    `http://localhost:5000/api/leetcode/${username}`
+  );
 
-  const profile = await profileRes.json();
-  const solved = await solvedRes.json();
-  const contest = await contestRes.json();
+  if (!response.ok) {
+    throw new Error("Failed to fetch LeetCode data");
+  }
 
-  return {
-    ...profile,
-    solved,
-    contest,
-  };
+  return await response.json();
 }

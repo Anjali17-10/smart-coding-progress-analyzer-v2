@@ -27,36 +27,40 @@ export default function App() {
   const [cfData, setCfData] = useState(null);
   const [cfSolved, setCfSolved] = useState(0);
   const [cfRatingHistory, setCfRatingHistory] = useState([]);
-
+  const [ccData, setCcData] = useState(null);
   const [lcData, setLcData] = useState(null);
+  
+async function handleAnalyze() {
+  try {
+    const [data, solved, history, leetcodeData] = await Promise.all([
+      getCodeforcesData(codeforces),
+      getCodeforcesSolved(codeforces),
+      getCodeforcesRatingHistory(codeforces),
+      getLeetCodeData(leetcode),
+    ]);
 
-  async function handleAnalyze() {
-    try {
-      const [
-        data,
-        solved,
-        history,
-        leetcodeData,
-      ] = await Promise.all([
-        getCodeforcesData(codeforces),
-        getCodeforcesSolved(codeforces),
-        getCodeforcesRatingHistory(codeforces),
-        getLeetCodeData(leetcode),
-      ]);
-console.log("LeetCode Data:", leetcodeData);
-console.log(lcData.contest)
-      setCfData(data);
-      setCfSolved(solved);
-      setCfRatingHistory(history);
-
-      setLcData(leetcodeData);
-
-      setShowCard(true);
-    } catch (error) {
-      console.log(error);
-      alert("Failed to fetch user data.");
+    console.log("LeetCode Data:", leetcodeData);
+    if (leetcodeData && leetcodeData.contest) {
+      console.log("Contest info:", leetcodeData.contest);
     }
+    const ccResponse = await fetch(
+  `http://localhost:5000/api/codechef/${codechef}`
+);
+
+const cc = await ccResponse.json();
+
+setCcData(cc);
+    setCfData(data);
+    setCfSolved(solved);
+    setCfRatingHistory(history);
+    setLcData(leetcodeData);
+console.log("LeetCode Data:", leetcodeData);
+    setShowCard(true);
+  } catch (error) {
+    console.log(error);
+    alert("Failed to fetch user data.");
   }
+}
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -82,13 +86,15 @@ console.log(lcData.contest)
 
           {showCard && (
             <>
-              <StatsCard
-                leetcode={leetcode}
-                codeforces={codeforces}
-                codechef={codechef}
-                cfData={cfData}
-                lcData={lcData}
-              />
+         <StatsCard
+  leetcode={leetcode}
+  codeforces={codeforces}
+  codechef={codechef}
+  cfData={cfData}
+  cfSolved={cfSolved}
+  lcData={lcData}
+  ccData={ccData}
+/>
 
               <ProgressChart
                 cfData={cfData}
