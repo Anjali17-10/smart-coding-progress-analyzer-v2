@@ -1,16 +1,180 @@
-# React + Vite
+# 🚀 Smart Coding Progress Analyzer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack coding analytics dashboard that consolidates coding statistics from **LeetCode**, **Codeforces**, and **CodeChef** into a single interactive platform. It provides insightful visualizations, progress tracking, and performance analytics to help programmers monitor their competitive programming journey.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🌐 Live Demo
 
-## React Compiler
+**Frontend:** https://your-vercel-link.vercel.app
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Backend:** https://your-render-link.onrender.com
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📸 Screenshots
+
+> Add screenshots after deployment.
+
+| Dashboard | Analytics |
+|-----------|-----------|
+| ![](screenshots/dashboard.png) | ![](screenshots/analytics.png) |
+
+---
+
+# ✨ Features
+
+- 📊 Unified dashboard for LeetCode, Codeforces, and CodeChef
+- 📈 Interactive charts using Recharts
+- 🟡 LeetCode solved problem statistics
+- 🔵 Codeforces rating, rank, solved problems, and rating history
+- 🟤 CodeChef rating, stars, solved problems, and contest history
+- 📉 Rating comparison across platforms
+- 📋 Problems solved comparison
+- 📌 Weekly consistency visualization
+- 📊 Analytics dashboard with contest participation and performance insights
+- ⚡ Real-time API integration
+- 🛡️ Error handling for invalid usernames
+- ⏳ Loading indicators for a better user experience
+- 📱 Fully responsive design
+
+---
+
+# 🛠️ Tech Stack
+
+### Frontend
+
+- React.js
+- Tailwind CSS
+- Recharts
+- JavaScript (ES6+)
+
+### Backend
+
+- Node.js
+- Express.js
+- GraphQL (LeetCode)
+- REST APIs
+
+### Platforms Integrated
+
+- LeetCode
+- Codeforces
+- CodeChef
+
+### Deployment
+
+- Vercel
+- Render
+
+---
+
+# 📂 Project Structure
+
+```
+smart-coding-progress-analyzer/
+│
+├── src/
+│   ├── components/
+│   ├── services/
+│   ├── App.jsx
+│   └── main.jsx
+│
+├── server.js
+├── package.json
+└── README.md
+```
+
+---
+
+# ⚙️ Installation
+
+## Clone the repository
+
+```bash
+git clone https://github.com/YourUsername/Smart-Coding-Progress-Analyzer.git
+```
+
+## Navigate into the project
+
+```bash
+cd Smart-Coding-Progress-Analyzer
+```
+
+## Install frontend dependencies
+
+```bash
+npm install
+```
+
+## Install backend dependencies
+
+```bash
+npm install express cors node-fetch cheerio
+```
+
+## Start backend
+
+```bash
+npm start
+```
+
+## Start frontend
+
+```bash
+npm run dev
+```
+
+---
+
+# 📊 APIs Used
+
+- LeetCode GraphQL API
+- Codeforces Official API
+- CodeChef Profile Scraper
+
+---
+
+# 🚀 Future Improvements
+
+- User authentication
+- Progress history database
+- Download analytics as PDF
+- Dark mode
+- More platform integrations (AtCoder, HackerRank, GeeksforGeeks)
+
+---
+
+# 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+If you'd like to improve this project:
+
+1. Fork the repository.
+2. Create your feature branch.
+3. Commit your changes.
+4. Push the branch.
+5. Open a Pull Request.
+
+---
+
+# ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub.
+
+---
+
+# 👩‍💻 Author
+
+**Anjali Diswar**
+
+- GitHub: https://github.com/Anjali17-10
+- LinkedIn: https://linkedin.com/in/YOUR-LINKEDIN
+- Email: YOUR_EMAIL
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
