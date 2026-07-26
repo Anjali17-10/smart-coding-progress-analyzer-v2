@@ -52,7 +52,7 @@ res.json({
 });
 
   } catch (err) {
-    console.error(err);
+   // console.error(err);
     res.status(500).json({
       error: err.message,
     });
@@ -111,7 +111,7 @@ app.get("/api/codechef/:username", async (req, res) => {
     });
 
   } catch (err) {
-    console.error(err);
+  //  console.error(err);
     res.status(500).json({
       error: "Failed to fetch CodeChef data",
     });

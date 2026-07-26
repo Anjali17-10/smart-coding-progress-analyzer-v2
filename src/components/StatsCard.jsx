@@ -6,6 +6,7 @@ export default function StatsCard({
   cfSolved,
   lcData,
   ccData,
+  lastUpdated,
 }) {
   const totalSolved =
   (lcData?.solved?.solvedProblem || 0) +
@@ -19,7 +20,9 @@ export default function StatsCard({
        <h2 className="text-3xl font-bold">
           Coding Progress Overview
         </h2>
-
+       <p className="text-slate-400 mt-2">
+  Last Updated: {lastUpdated}
+</p>
      <div className="flex justify-between mt-6">
   <div>
     <p className="text-slate-300">Connected Platforms</p>
@@ -42,10 +45,17 @@ export default function StatsCard({
     🟡 LeetCode
   </h2>
 
-  <p>
-    <span className="font-semibold">Username:</span>{" "}
+<p>
+  <span className="font-semibold">Username:</span>{" "}
+  <a
+    href={`https://leetcode.com/u/${leetcode}/`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-blue-600 hover:underline"
+  >
     {leetcode}
-  </p>
+  </a>
+</p>
 
   <div className="mt-4">
     <p className="text-sm text-slate-500">
@@ -89,7 +99,14 @@ export default function StatsCard({
 
           <p>
             <span className="font-semibold">Handle:</span>{" "}
-            {codeforces}
+            <a
+  href={`https://codeforces.com/profile/${codeforces}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-blue-600 hover:underline"
+>
+  {codeforces}
+</a>
           </p>
 
 <p>
@@ -115,7 +132,14 @@ export default function StatsCard({
 
           <p>
             <span className="font-semibold">Username:</span>{" "}
-            {codechef}
+            <a
+  href={`https://www.codechef.com/users/${codechef}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-blue-600 hover:underline"
+>
+  {codechef}
+</a>
           </p>
 
          <p>
@@ -130,7 +154,7 @@ export default function StatsCard({
 
 <p>
   <span className="font-semibold">Solved:</span>{" "}
-  {ccData?.solvedProblems || "----"}
+  {ccData?.solvedProblems || "----"}+
 </p>
 
 <p>

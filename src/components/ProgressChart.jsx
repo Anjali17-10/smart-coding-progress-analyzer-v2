@@ -12,6 +12,7 @@ export default function ProgressChart({
   cfData,
   cfSolved,
     lcData,
+    ccData,
 }) {
 
 const data = [
@@ -25,7 +26,7 @@ const data = [
   },
   {
     platform: "CodeChef",
-    solved: 0,
+    solved: ccData?.solvedProblems || 0,
   },
 ];
 

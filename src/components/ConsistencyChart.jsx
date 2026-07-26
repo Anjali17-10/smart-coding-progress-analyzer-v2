@@ -1,47 +1,51 @@
 import {
   ResponsiveContainer,
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   Tooltip,
   CartesianGrid,
 } from "recharts";
 
-const data = [
-  { day: "Mon", solved: 3 },
-  { day: "Tue", solved: 7 },
-  { day: "Wed", solved: 5 },
-  { day: "Thu", solved: 10 },
-  { day: "Fri", solved: 6 },
-  { day: "Sat", solved: 8 },
-  { day: "Sun", solved: 4 },
-];
+export default function ConsistencyChart({ lcData }) {
+  const data = [
+    {
+      difficulty: "Easy",
+      solved: lcData?.solved?.easySolved || 0,
+    },
+    {
+      difficulty: "Medium",
+      solved: lcData?.solved?.mediumSolved || 0,
+    },
+    {
+      difficulty: "Hard",
+      solved: lcData?.solved?.hardSolved || 0,
+    },
+  ];
 
-export default function ConsistencyChart() {
   return (
     <div className="mt-8 bg-white rounded-2xl shadow-xl p-6">
       <h2 className="text-2xl font-bold mb-6">
-        Weekly Consistency
+        LeetCode Problem Distribution
       </h2>
 
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
+        <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
 
-          <XAxis dataKey="day" />
+          <XAxis dataKey="difficulty" />
 
           <YAxis />
 
           <Tooltip />
 
-          <Line
-            type="monotone"
+          <Bar
             dataKey="solved"
-            stroke="#10b981"
-            strokeWidth={3}
+            fill="#10b981"
+            radius={[8, 8, 0, 0]}
           />
-        </LineChart>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );

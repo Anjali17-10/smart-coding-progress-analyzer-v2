@@ -14,22 +14,16 @@ export default function RatingChart({
   ccData,
 }) {
 
-  const data = [
- {
-  platform: "LeetCode",
-  rating: Math.round(
-    lcData?.contest?.contestRating || 0
-  ),
-},
-    {
-      platform: "Codeforces",
-      rating: cfData?.rating || 0,
-    },
-    {
-      platform: "CodeChef",
-      rating: ccData?.rating || 0,
-    },
-  ];
+const data = [
+  {
+    platform: "Codeforces",
+    rating: cfData?.rating || 0,
+  },
+  {
+    platform: "CodeChef",
+    rating: ccData?.rating || 0,
+  },
+];
 
   return (
     <div className="mt-8 bg-white rounded-2xl shadow-xl p-6">

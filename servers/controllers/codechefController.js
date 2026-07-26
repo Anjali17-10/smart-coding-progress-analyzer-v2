@@ -11,14 +11,14 @@ exports.getCodeChefData = async (req, res) => {
 
     const $ = cheerio.load(response.data);
 
-    console.log($.html());
+   // console.log($.html());
 
     res.json({
       success: true,
     });
 
   } catch (err) {
-    console.log(err);
+   // console.log(err);
 
     res.status(500).json({
       error: "Failed to fetch CodeChef profile",

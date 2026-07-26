@@ -6,6 +6,7 @@ export default function InputForm({
   codechef,
   setCodechef,
   onAnalyze,
+  loading,
 }) {
   return (
     <div className="mt-8 space-y-5">
@@ -48,12 +49,17 @@ export default function InputForm({
         />
       </div>
 
-      <button
-        onClick={onAnalyze}
-        className="w-full bg-slate-900 text-white py-3 rounded-xl font-semibold shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
-      >
-        Analyze Progress
-      </button>
+<button
+  onClick={onAnalyze}
+  disabled={loading}
+  className={`w-full py-3 rounded-xl font-semibold shadow-md transition-all duration-200 ${
+    loading
+      ? "bg-slate-500 cursor-not-allowed"
+      : "bg-slate-900 text-white hover:shadow-xl hover:scale-[1.02]"
+  }`}
+>
+  {loading ? "Analyzing..." : "Analyze Progress"}
+</button>
     </div>
   );
 }

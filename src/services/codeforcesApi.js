@@ -4,7 +4,7 @@ export async function getCodeforcesData(handle) {
   const response = await fetch(`${BASE_URL}/${handle}`);
 
   if (!response.ok) {
-    throw new Error("Failed to fetch Codeforces user");
+    throw new Error("Invalid Codeforces username");
   }
 
   return await response.json();
@@ -14,11 +14,10 @@ export async function getCodeforcesSolved(handle) {
   const response = await fetch(`${BASE_URL}/${handle}/solved`);
 
   if (!response.ok) {
-    throw new Error("Failed to fetch solved count");
+    throw new Error("Invalid Codeforces username");
   }
 
   const data = await response.json();
-
   return data.solved;
 }
 
@@ -26,7 +25,7 @@ export async function getCodeforcesRatingHistory(handle) {
   const response = await fetch(`${BASE_URL}/${handle}/history`);
 
   if (!response.ok) {
-    throw new Error("Failed to fetch rating history");
+    throw new Error("Invalid Codeforces username");
   }
 
   return await response.json();
