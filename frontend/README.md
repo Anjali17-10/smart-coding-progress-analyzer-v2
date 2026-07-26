@@ -1,4 +1,10 @@
 # 🚀 Smart Coding Progress Analyzer
+  # Smart Coding Progress Analyzer
+
+🚀 Live Demo: https://smart-coding-progress-analyzer-v2-3.vercel.app/
+
+Backend API:
+https://smart-coding-progress-analyzer-v2-1.onrender.com
 
 A full-stack coding analytics dashboard that consolidates coding statistics from **LeetCode**, **Codeforces**, and **CodeChef** into a single interactive platform. It provides insightful visualizations, progress tracking, and performance analytics to help programmers monitor their competitive programming journey.
 
