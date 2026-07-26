@@ -1,6 +1,6 @@
 export async function getLeetCodeData(username) {
   const response = await fetch(
-    `http://localhost:5000/api/leetcode/${username}`
+    `https://smart-coding-progress-analyzer-v2-1.onrender.com/api/leetcode/${username}`
   );
 
   if (!response.ok) {

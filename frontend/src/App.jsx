@@ -49,7 +49,7 @@ async function handleAnalyze() {
 
     // ---------- CodeChef ----------
     const ccResponse = await fetch(
-      `http://localhost:5000/api/codechef/${codechef}`
+      `https://smart-coding-progress-analyzer-v2-1.onrender.com/api/codechef/${codechef}`
     );
 
     if (!ccResponse.ok) {

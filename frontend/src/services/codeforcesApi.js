@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api/codeforces";
+const BASE_URL = "https://smart-coding-progress-analyzer-v2-1.onrender.com/api/codeforces";
 
 export async function getCodeforcesData(handle) {
   const response = await fetch(`${BASE_URL}/${handle}`);
