@@ -25,10 +25,11 @@ export default function Footer() {
             </h3>
 
             <ul className="space-y-2 text-slate-400">
-              <li>📊 Interactive Analytics</li>
-              <li>📈 Rating History</li>
-              <li>🏆 Coding Statistics</li>
-              <li>🌐 Multi-platform Dashboard</li>
+              <li>📊 Intelligent Coding Analytics & Topic Mastery</li>
+              <li>🧠 AI Performance Insights & Diagnostics</li>
+              <li>📈 ML Performance Forecasts & Clustering</li>
+              <li>📅 Adaptive AI Weekly Study Planner</li>
+              <li>💼 Technical Mock Interview Studio</li>
             </ul>
           </div>
 
@@ -86,7 +87,7 @@ export default function Footer() {
           </p>
 
           <p className="text-slate-500 text-sm mt-2 md:mt-0">
-            Built with React • Express • Tailwind • Recharts
+            Built with React • Node.js/Express • Python (Scikit-Learn) • Tailwind • Recharts
           </p>
 
         </div>

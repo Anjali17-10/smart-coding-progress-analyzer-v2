@@ -1,199 +1,218 @@
 import express from "express";
-import fetch from "node-fetch";
-import * as cheerio from "cheerio";   // ✅ use * as cheerio
 import cors from "cors";
+
+import { fetchLeetCodeData } from "./services/leetcodeService.js";
+import { fetchCodeforcesData } from "./services/codeforcesService.js";
+import { fetchCodeChefData } from "./services/codechefService.js";
+import { computeUnifiedAnalytics } from "./services/analyticsEngine.js";
+import { generateAIInsights } from "./services/aiInsightsService.js";
+import { getMLPredictions } from "./services/mlPredictionService.js";
+import { generateStudyPlan } from "./services/studyPlannerService.js";
+import {
+  getInterviewQuestions,
+  evaluateInterviewSolution,
+  computeInterviewReadiness,
+} from "./services/interviewPrepService.js";
 
 const app = express();
 app.use(cors());
+app.use(express.json());
+
+// -------------------------------------------------------------
+// Core Platform Endpoints (Extended with Topic & Contest Data)
+// -------------------------------------------------------------
 
 // LeetCode route
 app.get("/api/leetcode/:username", async (req, res) => {
-  const { username } = req.params;
-
-  const query = `
-  {
-    matchedUser(username: "${username}") {
-      username
-
-      submitStats {
-        acSubmissionNum {
-          difficulty
-          count
-        }
-      }
-    }
-  }
-  `;
-
   try {
-    const response = await fetch("https://leetcode.com/graphql", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query }),
-    });
-
-    const data = await response.json();
-
-    console.log(data);
-
-    const stats = data.data.matchedUser.submitStats.acSubmissionNum;
-
-res.json({
-  username,
-
-  solved: {
-    solvedProblem: stats.find(x => x.difficulty === "All")?.count || 0,
-    easySolved: stats.find(x => x.difficulty === "Easy")?.count || 0,
-    mediumSolved: stats.find(x => x.difficulty === "Medium")?.count || 0,
-    hardSolved: stats.find(x => x.difficulty === "Hard")?.count || 0,
-  }
-});
-
+    const data = await fetchLeetCodeData(req.params.username);
+    res.json(data);
   } catch (err) {
-   // console.error(err);
-    res.status(500).json({
-      error: err.message,
-    });
+    res.status(500).json({ error: err.message });
   }
 });
-// CodeChef route
-app.get("/api/codechef/:username", async (req, res) => {
-  const { username } = req.params;
 
-  try {
-    const response = await fetch(`https://www.codechef.com/users/${username}`);
-    const html = await response.text();
-
-    // Rating history
-    const historyMatch = html.match(/var all_rating = (.*?);/s);
-
-    let history = [];
-
-    if (historyMatch) {
-      history = JSON.parse(historyMatch[1]);
-    }
-
-    const currentRating =
-      history.length > 0
-        ? Number(history[history.length - 1].rating)
-        : 0;
-
-    const maxRating =
-      history.length > 0
-        ? Math.max(...history.map(x => Number(x.rating)))
-        : 0;
-
-    function getStars(rating) {
-      if (rating < 1400) return 1;
-      if (rating < 1600) return 2;
-      if (rating < 1800) return 3;
-      if (rating < 2000) return 4;
-      if (rating < 2200) return 5;
-      if (rating < 2500) return 6;
-      return 7;
-    }
-
-    const solvedMatch = html.match(/solving\s*<span[^>]*>(\d+)<\/span>\s*Problems/i);
-
-    const solvedProblems = solvedMatch
-      ? Number(solvedMatch[1])
-      : 0;
-
-    res.json({
-      username,
-      rating: currentRating,
-      maxRating,
-      stars: getStars(currentRating),
-      solvedProblems,
-      history,
-    });
-
-  } catch (err) {
-  //  console.error(err);
-    res.status(500).json({
-      error: "Failed to fetch CodeChef data",
-    });
-  }
-});
-// codeforces
+// Codeforces routes
 app.get("/api/codeforces/:handle", async (req, res) => {
   try {
-    const response = await fetch(
-      `https://codeforces.com/api/user.info?handles=${req.params.handle}`
-    );
-
-    const data = await response.json();
-
-    if (data.status !== "OK") {
-      return res.status(404).json({
-        error: "User not found",
-      });
-    }
-
-    res.json(data.result[0]);
+    const data = await fetchCodeforcesData(req.params.handle);
+    res.json(data);
   } catch (err) {
-    res.status(500).json({
-      error: err.message,
-    });
+    res.status(500).json({ error: err.message });
   }
 });
+
+// Codeforces backwards-compatibility routes
 app.get("/api/codeforces/:handle/solved", async (req, res) => {
   try {
-    const response = await fetch(
-      `https://codeforces.com/api/user.status?handle=${req.params.handle}`
-    );
-
-    const data = await response.json();
-
-    if (data.status !== "OK") {
-      return res.status(404).json({
-        error: "User not found",
-      });
-    }
-
-    const solved = new Set();
-
-    data.result.forEach((sub) => {
-      if (sub.verdict === "OK") {
-        solved.add(`${sub.problem.contestId}-${sub.problem.index}`);
-      }
-    });
-
-    res.json({
-      solved: solved.size,
-    });
+    const data = await fetchCodeforcesData(req.params.handle);
+    res.json({ solved: data.solved });
   } catch (err) {
-    res.status(500).json({
-      error: err.message,
-    });
+    res.status(500).json({ error: err.message });
   }
 });
+
 app.get("/api/codeforces/:handle/history", async (req, res) => {
   try {
-    const response = await fetch(
-      `https://codeforces.com/api/user.rating?handle=${req.params.handle}`
-    );
-
-    const data = await response.json();
-
-    if (data.status !== "OK") {
-      return res.status(404).json({
-        error: "User not found",
-      });
-    }
-
-    res.json(data.result);
+    const data = await fetchCodeforcesData(req.params.handle);
+    res.json(data.ratingHistory || []);
   } catch (err) {
-    res.status(500).json({
-      error: err.message,
-    });
+    res.status(500).json({ error: err.message });
   }
+});
+
+// CodeChef route
+app.get("/api/codechef/:username", async (req, res) => {
+  try {
+    const data = await fetchCodeChefData(req.params.username);
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// -------------------------------------------------------------
+// Feature 1: Unified Cross-Platform Coding Analytics
+// -------------------------------------------------------------
+app.post("/api/analytics/unified", (req, res) => {
+  try {
+    const { lcData, cfData, ccData } = req.body;
+    const analytics = computeUnifiedAnalytics({ lcData, cfData, ccData });
+    res.json(analytics);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// -------------------------------------------------------------
+// Feature 2: AI-Powered Performance Insights (Gemini / Heuristic)
+// -------------------------------------------------------------
+app.post("/api/ai/insights", async (req, res) => {
+  try {
+    const { analytics, apiKey } = req.body;
+    if (!analytics) {
+      return res.status(400).json({ error: "Missing analytics payload" });
+    }
+    const insights = await generateAIInsights(analytics, apiKey);
+    res.json(insights);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// -------------------------------------------------------------
+// Feature 3: ML-Based Performance Prediction & Archetypes
+// -------------------------------------------------------------
+app.post("/api/ml/predict", async (req, res) => {
+  try {
+    const { analytics, cfHistory, currentRating } = req.body;
+    if (!analytics) {
+      return res.status(400).json({ error: "Missing analytics payload" });
+    }
+    const predictions = await getMLPredictions(analytics, cfHistory, currentRating);
+    res.json(predictions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// -------------------------------------------------------------
+// Feature 4: AI-Powered Study Planner
+// -------------------------------------------------------------
+app.post("/api/planner/generate", (req, res) => {
+  try {
+    const { analytics, hoursPerWeek, targetGoal, customWeakTopics } = req.body;
+    const plan = generateStudyPlan({
+      analytics,
+      hoursPerWeek: Number(hoursPerWeek) || 10,
+      targetGoal,
+      customWeakTopics,
+    });
+    res.json(plan);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// -------------------------------------------------------------
+// Feature 5: AI Interview Preparation Module
+// -------------------------------------------------------------
+app.get("/api/interview/questions", (req, res) => {
+  try {
+    const { topic } = req.query;
+    const questions = getInterviewQuestions(topic);
+    res.json(questions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/api/interview/evaluate", (req, res) => {
+  try {
+    const { questionId, code, language, hintsUsed, timeSpentSeconds } = req.body;
+    const evaluation = evaluateInterviewSolution({
+      questionId,
+      code,
+      language,
+      hintsUsed,
+      timeSpentSeconds,
+    });
+    res.json(evaluation);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/api/interview/readiness", (req, res) => {
+  try {
+    const { sessions } = req.body;
+    const readiness = computeInterviewReadiness(sessions);
+    res.json(readiness);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// -------------------------------------------------------------
+// Presets / Quick Demo Endpoints for Recruiter & Evaluator Testing
+// -------------------------------------------------------------
+app.get("/api/presets", (req, res) => {
+  res.json([
+    {
+      id: "anjali",
+      name: "Anjali (Active Student)",
+      description: "Consistent problem solver with solid string/arrays, developing DP & contest confidence.",
+      handles: {
+        leetcode: "anjali_17_10",
+        codeforces: "Anjali021",
+        codechef: "sane_ring_4",
+      },
+    },
+    {
+      id: "grinder",
+      name: "Alex (Contest Grinder)",
+      description: "High contest volume and fast implementation, declining recent rating from early WAs.",
+      handles: {
+        leetcode: "neal_wu",
+        codeforces: "tourist",
+        codechef: "gennady",
+      },
+    },
+    {
+      id: "interview",
+      name: "Sam (Interview Prep Aspirant)",
+      description: "Focusing heavily on Medium/Hard LeetCode problems for upcoming placements.",
+      handles: {
+        leetcode: "lee215",
+        codeforces: "errichto",
+        codechef: "aryan",
+      },
+    },
+  ]);
 });
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Backend running on port ${PORT}`);
+  console.log(`Smart Coding Progress Analyzer API running on port ${PORT}`);
 });
